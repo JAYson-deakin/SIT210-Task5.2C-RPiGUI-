@@ -1,0 +1,61 @@
+from tkinter import *
+import tkinter.font as TkFont
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
+GPIO.output(17, GPIO.LOW)
+
+GPIO.setup(27, GPIO.OUT)
+GPIO.output(27, GPIO.LOW)
+
+GPIO.setup(22, GPIO.OUT)
+GPIO.output(22, GPIO.LOW)
+
+win = Tk()
+
+myFont = TkFont.Font(family = 'Helvetica', size = 36, weight = 'bold')
+
+def ledONred():
+    print("RED button pressed")
+    if GPIO.input(17) :
+        GPIO.output(17,GPIO.LOW)
+    else:
+        GPIO.output(17,GPIO.HIGH)
+        
+def ledONgreen():
+    print("GREEN button pressed")
+    if GPIO.input(27) :
+        GPIO.output(27,GPIO.LOW)
+    else:
+        GPIO.output(27,GPIO.HIGH)
+        
+def ledONyellow():
+    print("YELLOW button pressed")
+    if GPIO.input(22) :
+        GPIO.output(22,GPIO.LOW)
+    else:
+        GPIO.output(22,GPIO.HIGH)
+
+def exitProgram():
+    print("Exit Button pressed")
+    GPIO.cleanup()
+    win.quit()
+
+
+win.title("First GUI")
+win.geometry('800x480')
+
+exitButton  = Button(win, text = "Exit", font = myFont, command = exitProgram, height =2 , width = 6) 
+exitButton.pack(side = BOTTOM)
+
+ledButton = Button(win, text = "Red", font = myFont, command = ledONred, height = 2, width =8 )
+ledButton.pack()
+
+ledButton = Button(win, text = "Green", font = myFont, command = ledONgreen, height = 2, width =8 )
+ledButton.pack()
+
+ledButton = Button(win, text = "Yellow", font = myFont, command = ledONyellow, height = 2, width =8 )
+ledButton.pack()
+
+mainloop()
